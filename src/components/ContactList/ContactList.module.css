@@ -1,0 +1,23 @@
+.contactList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+  margin: 20px auto;
+}
+
+.contact {
+  min-width: 270px;
+  max-width: 270px;
+  padding: 15px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 50px;
+  background-color: #f9f9f9;
+}

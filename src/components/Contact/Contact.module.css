@@ -1,0 +1,16 @@
+.name,
+.phone {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.button {
+  background-color: rgb(181, 184, 183);
+  border: none;
+  transition: 250ms ease-in;
+}
+
+.button:hover {
+  background-color: rgba(204, 208, 208, 0.963);
+}
