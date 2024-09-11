@@ -1,16 +1,26 @@
-.name,
-.phone {
+.contact {
   display: flex;
-  align-items: center;
-  column-gap: 10px;
+  justify-content: space-between; /* Розміщення елементів зліва і справа */
+  align-items: center; /* Вертикальне вирівнювання */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Відступ між контактами */
+  width: 100%; /* Щоб контакт займав всю доступну ширину контейнера */
+  box-sizing: border-box; /* Включає padding і border в ширину і висоту */
 }
 
-.button {
-  background-color: rgb(181, 184, 183);
+.contactText {
+  flex: 1; /* Текст займає всю доступну ширину, залишаючи місце для кнопки справа */
+}
+
+button {
+  background-color: transparent;
   border: none;
-  transition: 250ms ease-in;
+  color: red;
+  cursor: pointer;
 }
 
-.button:hover {
-  background-color: rgba(204, 208, 208, 0.963);
+button:hover {
+  color: darkred;
 }

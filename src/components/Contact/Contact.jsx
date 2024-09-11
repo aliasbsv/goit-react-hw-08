@@ -1,29 +1,29 @@
-import { FaUserCircle } from "react-icons/fa";
-import { AiFillPhone } from "react-icons/ai";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsOps";
-import css from "./Contact.module.css";
+import { deleteContact } from "../../redux/contacts/operations"; // Оновлений імпорт
+import styles from "./Contact.module.css";
 
 const Contact = ({ id, name, number }) => {
   const dispatch = useDispatch();
-  const onDeleteContact = () => {
+
+  const handleDelete = () => {
     dispatch(deleteContact(id));
   };
 
   return (
-    <>
-      <div className="profile">
-        <p className={css.name}>
-          <FaUserCircle /> {name}
-        </p>
-        <p className={css.number}>
-          <AiFillPhone /> {number}
-        </p>
-      </div>
-      <button className={css.button} type="button" onClick={onDeleteContact}>
-        Delete
-      </button>
-    </>
+    <li className={styles.contact}>
+      <span className={styles.contactText}>
+        {name}: {number}
+      </span>
+      <button onClick={handleDelete}>Delete</button>
+    </li>
   );
 };
+
+Contact.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+};
+
 export default Contact;

@@ -1,0 +1,27 @@
+.userMenu {
+  display: flex;
+  align-items: center; /* Вертикальне вирівнювання всіх елементів всередині .userMenu */
+  gap: 16px;
+  height: 100%; /* Забезпечує, що блок буде займати всю висоту батьківського контейнера */
+}
+
+.userName {
+  font-weight: bold;
+}
+
+.logoutButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 100%; /* Забезпечує, що кнопка займатиме всю висоту батьківського контейнера */
+  display: flex;
+  align-items: center; /* Центрує текст всередині кнопки */
+  justify-content: center; /* Центрує текст по горизонталі всередині кнопки */
+}
+
+.logoutButton:hover {
+  background-color: #c82333;
+}

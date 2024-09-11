@@ -1,75 +1,39 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { nanoid } from "nanoid";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsOps";
-import css from "./ContactForm.module.css";
-
-const validationSchema = Yup.object({
-  name: Yup.string()
-    .min(3, "Мінімум 3 символи")
-    .max(50, "Максимум 50 символів")
-    .required("Обов'язкове поле"),
-  number: Yup.string()
-    .min(3, "Мінімум 3 символи")
-    .max(50, "Максимум 50 символів")
-    .required("Обов'язкове поле"),
-});
+import { addContact } from "../../redux/contacts/operations";
+import toast from "react-hot-toast";
+import styles from "./ContactForm.module.css"; // Імпортуйте стилі
 
 const ContactForm = () => {
   const dispatch = useDispatch();
 
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      number: "",
-    },
-    validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(addContact(values))
-        .unwrap()
-        .then(() => {
-          resetForm();
-        });
-    },
-  });
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      await dispatch(addContact(values)).unwrap();
+      resetForm();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
-    <form onSubmit={formik.handleSubmit} className={css.form}>
-      <label>
-        <span>Name: </span>
-        <input
-          type="text"
-          name="name"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className={formik.touched.name && formik.errors.name ? css.error : ""}
-        />
-        {formik.touched.name && formik.errors.name ? (
-          <div className={css.errorMessage}>{formik.errors.name}</div>
-        ) : null}
-      </label>
-      <label>
-        <span>Number: </span>
-        <input
-          type="text"
-          name="number"
-          value={formik.values.number}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className={
-            formik.touched.number && formik.errors.number ? css.error : ""
-          }
-        />
-        {formik.touched.number && formik.errors.number ? (
-          <div className={css.errorMessage}>{formik.errors.number}</div>
-        ) : null}
-      </label>
-      <button type="submit" className={css.button}>
-        Add contact
-      </button>
-    </form>
+    <Formik initialValues={{ name: "", number: "" }} onSubmit={handleSubmit}>
+      <Form className={styles.contactForm}>
+        <label>
+          Name
+          <Field type="text" name="name" />
+          <ErrorMessage name="name" component="div" />
+        </label>
+        <label>
+          Number
+          <Field type="tel" name="number" />
+          <ErrorMessage name="number" component="div" />
+        </label>
+        <button type="submit" style={{ marginTop: "15px" }}>
+          Add Contact
+        </button>
+      </Form>
+    </Formik>
   );
 };
 

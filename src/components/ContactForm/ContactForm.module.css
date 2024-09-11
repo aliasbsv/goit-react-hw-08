@@ -1,27 +1,35 @@
-.button {
-  background-color: rgb(181, 184, 183);
-  border: none;
-  transition: 250ms ease-in;
-  max-width: 150px;
-  margin: 0 auto;
-}
-
-.button:hover {
-  background-color: rgba(204, 208, 208, 0.963);
-}
-
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
+  justify-content: space-between;
+  gap: 15px; /* Відступи між полями форми та кнопкою */
+  max-width: 600px; /* Обмежує максимальну ширину форми */
   margin: 20px auto;
+}
+
+label {
+  display: flex;
+  flex-direction: column; /* Розміщує інпут під текстом мітки */
 }
 
 input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box; /* Включає padding і border в ширину та висоту */
+}
+
+button {
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 .error {

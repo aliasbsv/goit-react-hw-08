@@ -1,23 +1,43 @@
 .contactList {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 0;
   list-style: none;
+  padding: 0;
+  max-width: 400px; /* Збільшена максимальна ширина контейнера */
   margin: 20px auto;
 }
 
 .contact {
-  min-width: 270px;
-  max-width: 270px;
-  padding: 15px;
-  border: 1px solid grey;
-  border-radius: 10px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  column-gap: 50px;
-  background-color: #f9f9f9;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  cursor: pointer;
+  padding: 5px;
+}
+
+button:hover {
+  color: darkred;
+}
+.contactListItem {
+  display: flex;
+  justify-content: space-between; /* Розміщує елементи з простором між ними */
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Відступ між контактами */
+}
+
+.contactListButton {
+  /* Специфічний клас для кнопок у списку контактів */
+  margin: 0; /* Видалити верхній відступ */
 }

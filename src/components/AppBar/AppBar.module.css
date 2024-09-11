@@ -1,0 +1,43 @@
+/* Оновлені стилі для кнопки "Log out" */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #f8f9fa;
+  align-items: center; /* Вертикальне вирівнювання всіх елементів всередині header */
+}
+
+.header .logoutButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+  align-self: center; /* Центрує кнопку по вертикалі */
+  margin-top: 0; /* Задає відсутність верхнього відступу */
+}
+
+/* Оновлення загальних стилів для кнопок */
+button {
+  border-radius: 4px;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Загальний стиль кнопок без верхнього відступу */
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.addContactButton {
+  margin-top: 15px; /* Додати верхній відступ тільки для кнопки "Add contact" */
+}
