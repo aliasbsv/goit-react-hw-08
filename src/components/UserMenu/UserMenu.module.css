@@ -7,10 +7,11 @@
 
 .userName {
   font-weight: bold;
+  padding: 8px 16px;
 }
 
 .logoutButton {
-  background-color: #dc3545;
+  background-color: #f75d6d;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -23,5 +24,13 @@
 }
 
 .logoutButton:hover {
-  background-color: #c82333;
+  background-color: #f63145;
+}
+
+.named {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #333;
 }

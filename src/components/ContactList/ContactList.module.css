@@ -1,11 +1,35 @@
-.contactList {
-  list-style: none;
+* {
+  margin: 0;
   padding: 0;
-  max-width: 400px; /* Збільшена максимальна ширина контейнера */
-  margin: 20px auto;
+  box-sizing: border-box;
+}
+.contactList {
+  display: flex;
+  align-items: flex-start; /* Выравнивание элементов по началу */
+  justify-content: center; /* Центрирование элементов по горизонтали */
+  flex-wrap: wrap; /* Перенос элементов на новый ряд */
+  gap: 20px; /* Отступы между контактами */
+  padding: 0;
+  list-style: none;
+  margin: 20px auto; /* Центрирование списка */
+  box-sizing: border-box; /* Учитываем padding и border в ширину и высоту */
 }
 
 .contact {
+  min-width: 270px; /* Минимальная ширина контакта */
+  max-width: 270px; /* Максимальная ширина контакта */
+  padding: 15px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 50px;
+  background-color: #f9f9f9;
+  box-sizing: border-box; /* Учитываем padding и border в ширину и высоту */
+}
+
+.contactListItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,31 +37,27 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
-  width: 100%;
-}
-
-button {
-  background-color: transparent;
-  border: none;
-  color: red;
-  cursor: pointer;
-  padding: 5px;
-}
-
-button:hover {
-  color: darkred;
-}
-.contactListItem {
-  display: flex;
-  justify-content: space-between; /* Розміщує елементи з простором між ними */
-  align-items: center;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px; /* Відступ між контактами */
 }
 
 .contactListButton {
-  /* Специфічний клас для кнопок у списку контактів */
-  margin: 0; /* Видалити верхній відступ */
+  padding: 5px 10px;
+  border: none;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contactListButton:hover {
+  background-color: #c0392b;
+}
+
+.name,
+.number {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #333;
 }

@@ -1,8 +1,8 @@
+import css from "./ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch } from "react-redux";
 import { addContact } from "../../redux/contacts/operations";
 import toast from "react-hot-toast";
-import styles from "./ContactForm.module.css"; // Імпортуйте стилі
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const ContactForm = () => {
 
   return (
     <Formik initialValues={{ name: "", number: "" }} onSubmit={handleSubmit}>
-      <Form className={styles.contactForm}>
+      <Form className={css.contactForm}>
         <label>
           Name
           <Field type="text" name="name" />
@@ -29,9 +29,7 @@ const ContactForm = () => {
           <Field type="tel" name="number" />
           <ErrorMessage name="number" component="div" />
         </label>
-        <button type="submit" style={{ marginTop: "15px" }}>
-          Add Contact
-        </button>
+        <button type="submit">Add Contact</button>
       </Form>
     </Formik>
   );

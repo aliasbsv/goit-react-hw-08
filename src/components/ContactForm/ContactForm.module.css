@@ -1,22 +1,31 @@
-.form {
+.contactForm {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 15px; /* Відступи між полями форми та кнопкою */
-  max-width: 600px; /* Обмежує максимальну ширину форми */
-  margin: 20px auto;
+  gap: 15px; /* Отступы между полями формы и кнопкой */
+  width: 100%; /* Занимает всю доступную ширину контейнера */
+  padding: 20px; /* Добавляем padding для более приятного отображения */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Добавляем небольшую тень */
+  box-sizing: border-box; /* Учитываем padding и border в ширину и высоту */
+  margin-top: 20px; /* Добавляем отступ сверху */
+}
+
+.contactForm button {
+  align-self: center; /* Центрирует кнопку по горизонтали */
 }
 
 label {
   display: flex;
-  flex-direction: column; /* Розміщує інпут під текстом мітки */
+  flex-direction: column; /* Размещение инпута под лейблом */
 }
 
 input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Включає padding і border в ширину та висоту */
+  box-sizing: border-box;
 }
 
 button {
@@ -26,10 +35,11 @@ button {
   color: white;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #06478b;
 }
 
 .error {

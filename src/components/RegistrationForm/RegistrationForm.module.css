@@ -27,4 +27,40 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #06478b;
+  color: white;
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.errorText {
+  font-size: 11px;
+  color: #ff0000;
+  margin-top: 5px;
+  background-color: antiquewhite;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px;
+}
+
+.field {
+  padding: 8px 10px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: box-shadow 300ms linear;
+  width: 100%;
+}
+
+.field:hover,
+.field:focus {
+  box-shadow: 0px 0px 1px 1px rgb(94, 184, 154);
+  outline: transparent;
 }

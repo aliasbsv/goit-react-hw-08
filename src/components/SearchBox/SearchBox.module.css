@@ -1,12 +1,19 @@
 .searchBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Отступы между полями ввода */
   max-width: 400px; /* Ширина повинна відповідати ширині форми */
   margin: 20px auto;
 }
 
-input {
-  width: 100%;
+.searchBox input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.searchBox label {
+  display: flex;
+  flex-direction: column;
 }

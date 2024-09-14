@@ -10,7 +10,7 @@ const LoginValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(8, "The password must be at least 8 characters long")
-    .max(20, "Password must be less than 20 characters"), // Исправлено на 20 символов
+    .max(20, "Password must be less than 20 characters"),
   email: Yup.string()
     .email("Incorrect email address")
     .required("Email address is required"),
@@ -24,11 +24,11 @@ const INITIAL_VALUES = {
 const LoginForm = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
-  const [isSubmitted, setIsSubmitted] = useState(false); // Отслеживаем, была ли форма отправлена
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (values) => {
     dispatch(login(values));
-    setIsSubmitted(true); // Устанавливаем флаг, что форма была отправлена
+    setIsSubmitted(true);
   };
 
   return (
@@ -37,51 +37,43 @@ const LoginForm = () => {
       onSubmit={handleSubmit}
       validationSchema={LoginValidationSchema}
     >
-      {({ isValid, touched }) => (
-        <Form className={css.form}>
-          <label className={css.label}>
-            <span>Email</span>
-            <Field
-              type="email"
-              name="email"
-              placeholder="example@gmail.com"
-              className={css.input}
-            />
-            <ErrorMessage
-              className={css.errorText}
-              name="email"
-              component="span"
-            />
-          </label>
-          <label className={css.label}>
-            <span>Password</span>
-            <Field
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              className={css.input}
-            />
-            <ErrorMessage
-              className={css.errorText}
-              name="password"
-              component="span"
-            />
-          </label>
-          <button
-            type="submit"
-            className={css.button}
-            disabled={!isValid || !touched.email || !touched.password} // Кнопка активна только при валидных данных
-          >
-            Log In
-          </button>
-          {/* Ошибка отображается, если есть ошибка от сервера, и форма была отправлена */}
-          {error && isSubmitted && (
-            <p className={css.errorText}>
-              Oops, some error occurred... {error}
-            </p>
-          )}
-        </Form>
-      )}
+      <Form className={css.form}>
+        <label className={css.label}>
+          <span>Email</span>
+          <Field
+            type="email"
+            name="email"
+            placeholder="example@gmail.com"
+            className={css.input}
+          />
+          <ErrorMessage
+            className={css.errorText}
+            name="email"
+            component="span"
+          />
+        </label>
+        <label className={css.label}>
+          <span>Password</span>
+          <Field
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            className={css.input}
+          />
+          <ErrorMessage
+            className={css.errorText}
+            name="password"
+            component="span"
+          />
+        </label>
+        <button type="submit" className={css.button}>
+          Log In
+        </button>
+
+        {error && isSubmitted && (
+          <p className={css.errorText}>Oops, some error occurred... {error}</p>
+        )}
+      </Form>
     </Formik>
   );
 };

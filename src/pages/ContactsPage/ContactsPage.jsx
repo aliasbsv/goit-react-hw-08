@@ -1,3 +1,4 @@
+import css from ".//ContactPage.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "../../redux/contacts/operations";
@@ -16,13 +17,17 @@ function ContactsPage() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={css.contactPage}>
       <h1>Your Contacts</h1>
-      <ContactForm />
+      <div className={css.formContainer}>
+        <ContactForm />
+      </div>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <SearchBox /> {/* Додайте цей рядок */}
-      <ContactList />
+      <SearchBox />
+      <div className={css.contactListContainer}>
+        <ContactList />
+      </div>
     </div>
   );
 }

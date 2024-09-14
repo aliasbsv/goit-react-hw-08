@@ -1,0 +1,17 @@
+.contactPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 350px; /* Ширина формы */
+  margin-bottom: 10px;
+}
+
+.contactListContainer {
+  width: 100%;
+}
