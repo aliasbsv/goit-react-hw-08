@@ -1,44 +1,88 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import css from "./LoginForm.module.css";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/auth/operations";
-import styles from "./LoginForm.module.css";
+import { selectAuthError } from "../../redux/auth/selectors";
+import { useState } from "react";
+
+const LoginValidationSchema = Yup.object().shape({
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "The password must be at least 8 characters long")
+    .max(20, "Password must be less than 20 characters"), // Исправлено на 20 символов
+  email: Yup.string()
+    .email("Incorrect email address")
+    .required("Email address is required"),
+});
+
+const INITIAL_VALUES = {
+  email: "",
+  password: "",
+};
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const error = useSelector(selectAuthError);
+  const [isSubmitted, setIsSubmitted] = useState(false); // Отслеживаем, была ли форма отправлена
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login({ email, password }));
+  const handleSubmit = (values) => {
+    dispatch(login(values));
+    setIsSubmitted(true); // Устанавливаем флаг, что форма была отправлена
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <label className={styles.label}>
-        Email
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={styles.input}
-          required
-        />
-      </label>
-      <label className={styles.label}>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.input}
-          required
-        />
-      </label>
-      <button type="submit" className={styles.button}>
-        Log In
-      </button>
-    </form>
+    <Formik
+      initialValues={INITIAL_VALUES}
+      onSubmit={handleSubmit}
+      validationSchema={LoginValidationSchema}
+    >
+      {({ isValid, touched }) => (
+        <Form className={css.form}>
+          <label className={css.label}>
+            <span>Email</span>
+            <Field
+              type="email"
+              name="email"
+              placeholder="example@gmail.com"
+              className={css.input}
+            />
+            <ErrorMessage
+              className={css.errorText}
+              name="email"
+              component="span"
+            />
+          </label>
+          <label className={css.label}>
+            <span>Password</span>
+            <Field
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              className={css.input}
+            />
+            <ErrorMessage
+              className={css.errorText}
+              name="password"
+              component="span"
+            />
+          </label>
+          <button
+            type="submit"
+            className={css.button}
+            disabled={!isValid || !touched.email || !touched.password} // Кнопка активна только при валидных данных
+          >
+            Log In
+          </button>
+          {/* Ошибка отображается, если есть ошибка от сервера, и форма была отправлена */}
+          {error && isSubmitted && (
+            <p className={css.errorText}>
+              Oops, some error occurred... {error}
+            </p>
+          )}
+        </Form>
+      )}
+    </Formik>
   );
 };
 

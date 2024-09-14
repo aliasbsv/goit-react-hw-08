@@ -1,5 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./auth/slice";
 import contactsReducer from "./contacts/slice";
@@ -8,7 +17,7 @@ import filtersReducer from "./filters/slice";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token"], // Зберігайте лише token
+  whitelist: ["token"],
 };
 
 const rootReducer = {
@@ -23,12 +32,18 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
           "auth/register/fulfilled",
           "auth/login/fulfilled",
           "auth/logOut/fulfilled",
           "auth/refreshUser/fulfilled",
         ],
-        ignoredPaths: ["auth.token"], // Додайте інші шляхи, якщо потрібно
+        ignoredPaths: ["auth.token"],
       },
     }),
 });

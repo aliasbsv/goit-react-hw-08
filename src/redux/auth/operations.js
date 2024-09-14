@@ -3,22 +3,27 @@ import axios from "axios";
 
 const BASE_URL = "https://connections-api.goit.global";
 
-// Функція для встановлення заголовка авторизації
-const setAuthHeader = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+// Создаем экземпляр axios с базовым URL
+const api = axios.create({
+  baseURL: BASE_URL,
+});
 
-// Функція для очищення заголовка авторизації
-const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = "";
-};
+// Интерцептор запросов
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export const register = createAsyncThunk(
   "auth/register",
   async (userData, thunkAPI) => {
     try {
-      const response = await axios.post(`${BASE_URL}/users/signup`, userData);
-      return response.data;
+      const { data } = await api.post("/users/signup", userData);
+      localStorage.setItem("token", data.token);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -29,9 +34,9 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userData, thunkAPI) => {
     try {
-      const response = await axios.post(`${BASE_URL}/users/login`, userData);
-      setAuthHeader(response.data.token); // Встановлюємо заголовок після успішного входу
-      return response.data;
+      const { data } = await api.post("/users/login", userData);
+      localStorage.setItem("token", data.token);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -40,9 +45,9 @@ export const login = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logOut", async (_, thunkAPI) => {
   try {
-    await axios.post(`${BASE_URL}/users/logout`);
-    clearAuthHeader(); // Очищуємо заголовок після виходу
-    return; // Повертає нічого, так як немає даних
+    await api.post("/users/logout");
+    localStorage.removeItem("token");
+    return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -51,17 +56,13 @@ export const logOut = createAsyncThunk("auth/logOut", async (_, thunkAPI) => {
 export const refreshUser = createAsyncThunk(
   "auth/refreshUser",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-
+    const token = localStorage.getItem("token");
     if (!token) {
       return thunkAPI.rejectWithValue("No token found");
     }
-
     try {
-      setAuthHeader(token); // Встановлюємо заголовок для запиту
-      const response = await axios.get(`${BASE_URL}/users/current`);
-      return response.data;
+      const { data } = await api.get("/users/current");
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

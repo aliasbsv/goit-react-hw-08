@@ -2,29 +2,36 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const BASE_URL = "https://connections-api.goit.global"; // Ваш базовий URL
+const BASE_URL = "https://connections-api.goit.global";
+
+// Создаем экземпляр axios с базовым URL
+const api = axios.create({
+  baseURL: BASE_URL,
+});
+
+// Интерцептор запросов
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return Promise.reject(new Error("No token found"));
+  }
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token; // Отримання токена з Redux store
-
-    if (!token) {
-      toast.error("No token found. Please log in.");
-      return thunkAPI.rejectWithValue("No token found");
-    }
-
     try {
-      const response = await axios.get(`${BASE_URL}/contacts`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Додавання токена в заголовок
-        },
-      });
+      const response = await api.get("/contacts");
       return response.data;
-    } catch (err) {
+    } catch (error) {
       toast.error("Something went wrong. Please, try again later.");
-      return thunkAPI.rejectWithValue(err.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "An unknown error occurred"
+      );
     }
   }
 );
@@ -32,24 +39,17 @@ export const fetchContacts = createAsyncThunk(
 export const addContact = createAsyncThunk(
   "contacts/add",
   async (contact, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-
-    if (!token) {
-      toast.error("No token found. Please log in.");
-      return thunkAPI.rejectWithValue("No token found");
-    }
-
     try {
-      const response = await axios.post(`${BASE_URL}/contacts`, contact, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.post("/contacts", contact);
+      toast.success("Contact added successfully!");
       return response.data;
-    } catch (err) {
-      toast.error("Something went wrong. Please, try again later.");
-      return thunkAPI.rejectWithValue(err.message);
+    } catch (error) {
+      toast.error("Failed to add contact. Please try again.");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "An unknown error occurred"
+      );
     }
   }
 );
@@ -57,24 +57,17 @@ export const addContact = createAsyncThunk(
 export const deleteContact = createAsyncThunk(
   "contacts/delete",
   async (contactId, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-
-    if (!token) {
-      toast.error("No token found. Please log in.");
-      return thunkAPI.rejectWithValue("No token found");
-    }
-
     try {
-      await axios.delete(`${BASE_URL}/contacts/${contactId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.delete(`/contacts/${contactId}`);
+      toast.success("Contact deleted successfully!");
       return contactId;
-    } catch (err) {
-      toast.error("Something went wrong. Please, try again later.");
-      return thunkAPI.rejectWithValue(err.message);
+    } catch (error) {
+      toast.error("Failed to delete contact. Please try again.");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "An unknown error occurred"
+      );
     }
   }
 );
@@ -82,28 +75,17 @@ export const deleteContact = createAsyncThunk(
 export const updateContact = createAsyncThunk(
   "contacts/update",
   async ({ contactId, contact }, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-
-    if (!token) {
-      toast.error("No token found. Please log in.");
-      return thunkAPI.rejectWithValue("No token found");
-    }
-
     try {
-      const response = await axios.patch(
-        `${BASE_URL}/contacts/${contactId}`,
-        contact,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.patch(`/contacts/${contactId}`, contact);
+      toast.success("Contact updated successfully!");
       return response.data;
-    } catch (err) {
-      toast.error("Something went wrong. Please, try again later.");
-      return thunkAPI.rejectWithValue(err.message);
+    } catch (error) {
+      toast.error("Failed to update contact. Please try again.");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "An unknown error occurred"
+      );
     }
   }
 );

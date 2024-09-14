@@ -34,8 +34,27 @@
   align-self: center; /* Центрує кнопку по горизонталі */
   width: 100%; /* Розтягує кнопку на всю ширину контейнера */
   max-width: 200px; /* Обмежує максимальну ширину кнопки */
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background-color: #06478b;
+  color: white;
+}
+
+.errorText {
+  font-size: 11px;
+  color: #ff0000;
+  margin-top: 5px;
+  background-color: antiquewhite;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px;
+}
+
+.button:disabled {
+  background-color: #d3d3d3; /* Серый цвет для неактивной кнопки */
+  cursor: not-allowed; /* Отключаем изменение курсора */
+  color: #a9a9a9; /* Цвет текста на неактивной кнопке */
+  pointer-events: none; /* Отключаем любые события клика */
 }
